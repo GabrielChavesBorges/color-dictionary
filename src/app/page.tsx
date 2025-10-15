@@ -7,8 +7,11 @@ export default function Home() {
 
   const [colorInput, setColorInput] = useState('');
 
-  function handleTranslationRequest() {
-    console.log("handleTranslationRequest");
+  async function handleTranslationRequest() {
+    console.log(`Sending: ${colorInput}`);
+    const response = await fetch(`/api?input=${encodeURIComponent(colorInput)}`);
+    const data = await response.json();
+    console.log(data.message);
   }
 
   function handleColorInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -23,7 +26,7 @@ export default function Home() {
   }
 
   function checkInput(value: String): boolean {
-    
+
     return true;
   }
 
@@ -37,6 +40,7 @@ export default function Home() {
       />
       <Button
         variant="outlined"
+        size="large"
         onClick={handleTranslationRequest}
       >OK</Button>
       <div></div>

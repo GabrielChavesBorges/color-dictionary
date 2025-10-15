@@ -1,4 +1,5 @@
 import mariadb from 'mariadb';
+import { NextResponse } from 'next/server';
 
 const pool = mariadb.createPool({
   host: process.env.DB_HOST,
@@ -8,7 +9,10 @@ const pool = mariadb.createPool({
   connectionLimit: 5
 });
 
-export async function GET() {
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const colorHexaCode = searchParams.get('input')?.toUpperCase();
+
   let connection;
   try {
     connection = await pool.getConnection();
@@ -26,4 +30,6 @@ export async function GET() {
   } finally {
     if (connection) connection.release();
   }
+
+  return NextResponse.json({ message: `You picked ${name}` });
 }
