@@ -18,7 +18,7 @@ export async function GET(req: Request) {
     connection = await pool.getConnection();
 
     // Query all colors
-    const rows = await connection.query("SELECT ID, Name, HEX(Code) AS CodeHex FROM Color");
+    const rows = await connection.query(`SELECT Name FROM Color WHERE Code = 0x${colorHexaCode};`);
 
     return new Response(JSON.stringify(rows), {
       status: 200,
@@ -28,8 +28,8 @@ export async function GET(req: Request) {
     console.error(err);
     return new Response(JSON.stringify({ error: 'Database error' }), { status: 500 });
   } finally {
-    if (connection) connection.release();
+    if (connection) {
+      connection.release();
+    }
   }
-
-  return NextResponse.json({ message: `You picked ${name}` });
 }

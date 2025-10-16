@@ -11,7 +11,8 @@ export default function Home() {
     console.log(`Sending: ${colorInput}`);
     const response = await fetch(`/api?input=${encodeURIComponent(colorInput)}`);
     const data = await response.json();
-    console.log(data.message);
+    const colorName = data[0].Name;
+    console.log(colorName);
   }
 
   function handleColorInputChange(event: ChangeEvent<HTMLInputElement>) {
