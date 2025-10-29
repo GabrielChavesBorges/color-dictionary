@@ -1,18 +1,20 @@
 'use client'
 
 import { Button, TextField } from '@mui/material';
-import { useEffect, useState, ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
+import './page.css';
 
 export default function Home() {
 
   const [colorInput, setColorInput] = useState('');
+  const [colorName, setColorName] = useState('Color Name');
 
   async function handleTranslationRequest() {
     console.log(`Sending: ${colorInput}`);
     const response = await fetch(`/api?input=${encodeURIComponent(colorInput)}`);
     const data = await response.json();
     const colorName = data[0].Name;
-    console.log(colorName);
+    setColorName(colorName);
   }
 
   function handleColorInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -34,17 +36,23 @@ export default function Home() {
   return (
     <div className="container">
       <TextField
-        id="input-color"
-        label="Color"
+        id="color-code"
+        label="Color Code"
         variant="outlined"
         onChange={handleColorInputChange}
       />
       <Button
+        className="button"
         variant="outlined"
         size="large"
         onClick={handleTranslationRequest}
-      >OK</Button>
-      <div></div>
+      >{'>'}</Button>
+      <TextField
+        id="color-name"
+        value={colorName}
+        variant="outlined"
+        disabled
+      />
     </div>
   );
 }
