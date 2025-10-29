@@ -6,12 +6,12 @@ import './page.css';
 
 export default function Home() {
 
-  const [colorInput, setColorInput] = useState('');
+  const [colorCode, setColorCode] = useState('');
   const [colorName, setColorName] = useState('Color Name');
 
   async function handleTranslationRequest() {
-    console.log(`Sending: ${colorInput}`);
-    const response = await fetch(`/api?input=${encodeURIComponent(colorInput)}`);
+    console.log(`Sending: ${colorCode}`);
+    const response = await fetch(`/api?input=${encodeURIComponent(colorCode)}`);
     const data = await response.json();
     const colorName = data[0].Name;
     setColorName(colorName);
@@ -25,7 +25,7 @@ export default function Home() {
       return;
     }
 
-    setColorInput(value);
+    setColorCode(value);
   }
 
   function checkInput(value: String): boolean {
@@ -35,6 +35,10 @@ export default function Home() {
 
   return (
     <div className="container">
+      <div
+        className='colorPick'
+        style={{backgroundColor: "#" + colorCode}}
+      />
       <TextField
         id="color-code"
         label="Color Code"
@@ -49,6 +53,7 @@ export default function Home() {
       >{'>'}</Button>
       <TextField
         id="color-name"
+        label="Color Name"
         value={colorName}
         variant="outlined"
         disabled

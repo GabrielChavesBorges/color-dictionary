@@ -3,3 +3,9 @@
   padding: 20px;
   gap: 5px;
 }
+
+.colorPick {
+  width: 60px;
+  border-style: none;
+  border-radius: 5px;
+}
