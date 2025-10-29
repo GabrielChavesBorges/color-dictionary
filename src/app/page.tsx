@@ -10,10 +10,10 @@ export default function Home() {
   const [colorName, setColorName] = useState('Color Name');
 
   async function handleTranslationRequest() {
-    console.log(`Sending: ${colorCode}`);
-    const response = await fetch(`/api?input=${encodeURIComponent(colorCode)}`);
+    const endpoint = "https://www.thecolorapi.com/id?hex=";
+    const response = await fetch(`${endpoint}?${colorCode}`);
     const data = await response.json();
-    const colorName = data[0].Name;
+    const colorName = data.name.value;
     setColorName(colorName);
   }
 
